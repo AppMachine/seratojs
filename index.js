@@ -76,11 +76,12 @@ class Crate {
    * compatible with that drive. This is what we call 'location-aware'
    * crates.
    */
-  constructor(name, seratoFolder) {
+  constructor(name, seratoFolder, isSmart = false) {
     // TODO: Make private
     this.name = sanitizeFilename(name);
     this.filename = this.name + ".crate";
     this.songPaths = [];
+    this.isSmart = isSmart
 
     this.seratoFolder = seratoFolder; // To override for testing...
   }
@@ -117,9 +118,9 @@ class Crate {
     const contents = await util.promisify(fs.readFile)(filepath, "ascii");
     return parse(contents);
   }
-  getSongPathsSync() {
+  getSongPathsSync(isSmart = false) {
     const filepath = this._buildCrateFilepath(
-      this.seratoFolder || PLATFORM_DEFAULT_SERATO_FOLDER
+      this.seratoFolder || PLATFORM_DEFAULT_SERATO_FOLDER, isSmart
     );
     const contents = fs.readFileSync(filepath, "ascii");
     return parse(contents);
@@ -134,8 +135,8 @@ class Crate {
     this.songPaths.push(resolved);
   }
 
-  _buildCrateFilepath(seratoFolder) {
-    const subcrateFolder = getSubcratesFolder(seratoFolder);
+  _buildCrateFilepath(seratoFolder, isSmart = false) {
+    const subcrateFolder = isSmart ? getSmartcratesFolder(seratoFolder) : getSubcratesFolder(seratoFolder);
     const filepath = path.join(subcrateFolder, this.filename);
     return filepath;
   }
