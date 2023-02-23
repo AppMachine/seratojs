@@ -118,9 +118,9 @@ class Crate {
     const contents = await util.promisify(fs.readFile)(filepath, "ascii");
     return parse(contents);
   }
-  getSongPathsSync(isSmart = false) {
+  getSongPathsSync() {
     const filepath = this._buildCrateFilepath(
-      this.seratoFolder || PLATFORM_DEFAULT_SERATO_FOLDER, isSmart
+      this.seratoFolder || PLATFORM_DEFAULT_SERATO_FOLDER, this.isSmart
     );
     const contents = fs.readFileSync(filepath, "ascii");
     return parse(contents);
