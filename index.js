@@ -24,6 +24,10 @@ function getSubcratesFolder(seratoFolder) {
   return path.join(seratoFolder, "SubCrates");
 }
 
+function getSmartcratesFolder(seratoFolder) {
+  return path.join(seratoFolder, "SmartCrates");
+}
+
 /**
  * For each Serato Folder location, collect crates and returns a list
  * of all of these.
@@ -36,7 +40,12 @@ function listCratesSync(seratoFolders = [PLATFORM_DEFAULT_SERATO_FOLDER]) {
       const name = path.basename(x, ".crate");
       return new Crate(name, seratoFolder);
     });
-    allCrates.push(...crates);
+    const smartcratesFolder = getSmartcratesFolder(seratoFolder);
+    const smartcrates = fs.readdirSync(smartcratesFolder).map((x) => {
+      const name = path.basename(x, ".crate");
+      return new Crate(name, seratoFolder);
+    });
+    allCrates.push(...crates, ...smartcrates);
   });
   return allCrates;
 }
