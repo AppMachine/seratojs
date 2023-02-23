@@ -79,7 +79,7 @@ class Crate {
   constructor(name, seratoFolder, isSmart = false) {
     // TODO: Make private
     this.name = sanitizeFilename(name);
-    this.filename = name + ".crate";
+    this.filename = name + isSmart ? ".scrate" : ".crate";
     this.songPaths = [];
     this.isSmart = isSmart
 
