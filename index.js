@@ -43,7 +43,7 @@ function listCratesSync(seratoFolders = [PLATFORM_DEFAULT_SERATO_FOLDER]) {
     const smartcratesFolder = getSmartcratesFolder(seratoFolder);
     const smartcrates = fs.readdirSync(smartcratesFolder).map((x) => {
       const name = path.basename(x, ".crate");
-      return new Crate(name.replace('-scrate', ''), seratoFolder, true);
+      return new Crate(name, seratoFolder, true);
     });
     allCrates.push(...crates, ...smartcrates);
   });
@@ -79,7 +79,7 @@ class Crate {
   constructor(name, seratoFolder, isSmart = false) {
     // TODO: Make private
     this.name = sanitizeFilename(name);
-    this.filename = this.name + ".crate";
+    this.filename = name + ".crate";
     this.songPaths = [];
     this.isSmart = isSmart
 
