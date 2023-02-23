@@ -137,7 +137,7 @@ class Crate {
 
   _buildCrateFilepath(seratoFolder, isSmart = false) {
     const subcrateFolder = isSmart ? getSmartcratesFolder(seratoFolder) : getSubcratesFolder(seratoFolder);
-    const filepath = path.join(subcrateFolder, this.filename);
+    const filepath = path.join(subcrateFolder, isSmart ? this.filename.replace('-scrate', '') : this.filename);
     return filepath;
   }
   _buildSaveBuffer() {
