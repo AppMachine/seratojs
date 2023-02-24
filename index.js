@@ -137,11 +137,11 @@ class Crate {
 
   _buildCrateFilepath(seratoFolder, isSmart = false) {
     const subcrateFolder = isSmart ? getSmartcratesFolder(seratoFolder) : getSubcratesFolder(seratoFolder);
-    filepath = ''
+    let filepath = '';
     if (isSmart) {
-      filepath = path.join(subcrateFolder, this.filename.replace('-scrate', '').replace('--', '≫≫'));
+      filepath = path.join(subcrateFolder, this.filename.replace('-scrate', '').replaceAll('--', '≫≫'));
     } else {
-      filepath = path.join(subcrateFolder, this.filename.replace('--', '%%'));
+      filepath = path.join(subcrateFolder, this.filename.replaceAll('--', '%%'));
     }
     return filepath;
   }
