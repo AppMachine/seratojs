@@ -28,6 +28,11 @@ function getSmartcratesFolder(seratoFolder) {
   return path.join(seratoFolder, "SmartCrates");
 }
 
+/** Checks if the default platform folder for serato is available. */
+function isDefaultSeratoFolderPresent() { 
+  return fs.existsSync(PLATFORM_DEFAULT_SERATO_FOLDER);
+}
+
 /**
  * For each Serato Folder location, collect crates and returns a list
  * of all of these.
@@ -36,6 +41,12 @@ function listCratesSync(seratoFolders = [PLATFORM_DEFAULT_SERATO_FOLDER]) {
   const allCrates = [];
   seratoFolders.forEach((seratoFolder) => {
     const subcratesFolder = getSubcratesFolder(seratoFolder);
+
+    // Make sure the folder existsts
+    if(fs.existsSync(subcratesFolder) === false) {
+      return;
+    }
+
     const crates = fs.readdirSync(subcratesFolder).map((x) => {
       const name = path.basename(x, ".crate");
       return new Crate(name, seratoFolder);
@@ -54,6 +65,12 @@ async function listCrates(seratoFolders = [PLATFORM_DEFAULT_SERATO_FOLDER]) {
   const allCrates = [];
   for (const seratoFolder of seratoFolders) {
     const subcratesFolder = getSubcratesFolder(seratoFolder);
+
+    // Make sure the folder existsts
+    if(fs.existsSync(subcratesFolder) === false) {
+      continue;
+    }
+
     const files = await util.promisify(fs.readdir)(subcratesFolder);
     const crates = files.map((x) => {
       const name = path.basename(x, ".crate");
@@ -193,6 +210,7 @@ const seratojs = {
   Crate: Crate,
   listCratesSync: listCratesSync,
   listCrates: listCrates,
+  isDefaultSeratoFolderPresent: isDefaultSeratoFolderPresent
 };
 
 module.exports = seratojs;
