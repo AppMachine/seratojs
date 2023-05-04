@@ -132,6 +132,11 @@ class Crate {
     const filepath = this._buildCrateFilepath(
       this.seratoFolder || PLATFORM_DEFAULT_SERATO_FOLDER
     );
+
+    if (fs.existsSync(filepath) === false) {
+      return [];
+    }
+
     const contents = await util.promisify(fs.readFile)(filepath, "ascii");
     return parse(contents);
   }
@@ -139,6 +144,11 @@ class Crate {
     const filepath = this._buildCrateFilepath(
       this.seratoFolder || PLATFORM_DEFAULT_SERATO_FOLDER, this.isSmart
     );
+
+    if (fs.existsSync(filepath) === false) {
+      return [];
+    }
+
     const contents = fs.readFileSync(filepath, "ascii");
     return parse(contents);
   }
