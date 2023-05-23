@@ -51,12 +51,19 @@ function listCratesSync(seratoFolders = [PLATFORM_DEFAULT_SERATO_FOLDER]) {
       const name = path.basename(x, ".crate");
       return new Crate(name, seratoFolder);
     });
+    allCrates.push(...crates);
     const smartcratesFolder = getSmartcratesFolder(seratoFolder);
+
+    // Make sure the folder existsts
+    if(fs.existsSync(smartcratesFolder) === false) {
+      return;
+    }
+    
     const smartcrates = fs.readdirSync(smartcratesFolder).map((x) => {
       const name = path.basename(x, ".crate");
       return new Crate(name, seratoFolder, true);
     });
-    allCrates.push(...crates, ...smartcrates);
+    allCrates.push(...smartcrates);
   });
   return allCrates;
 }
