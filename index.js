@@ -169,10 +169,10 @@ class Crate {
     this.songPaths.push(resolved);
   }
 
-  _buildCrateFilepath(seratoFolder, isSmart = false) {
-    const subcrateFolder = isSmart ? getSmartcratesFolder(seratoFolder) : getSubcratesFolder(seratoFolder);
+  _buildCrateFilepath(seratoFolder) {
+    const subcrateFolder = this.isSmart ? getSmartcratesFolder(seratoFolder) : getSubcratesFolder(seratoFolder);
     let filepath = '';
-    if (isSmart) {
+    if (this.isSmart) {
       filepath = path.join(subcrateFolder, this.filename.replace('-scrate', '').replaceAll('--', '≫≫'));
     } else {
       filepath = path.join(subcrateFolder, this.filename.replaceAll('--', '%%'));
