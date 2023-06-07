@@ -1,6 +1,6 @@
 const path = require("path");
 
-const INVALID_CHARACTERS_REGEX = /[^A-Za-z0-9_ ]/gi;
+const INVALID_CHARACTERS_REGEX = /[^A-Za-z0-9_. ]/gi;
 
 const parse = function (contents) {
   // Find all 'ptrk' ocurrances
