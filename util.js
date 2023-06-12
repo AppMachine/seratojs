@@ -83,6 +83,20 @@ function isFromExternalDrive(songPath, platformParam = null) {
   );
 }
 
+/**
+ * @param {string} asciiString
+ * @return {string}
+ * @private
+ */
+function asciiToUtf8(asciiString) {
+  const asciiUint8Array = new Uint8Array(asciiString.length);
+  for (let i = 0; i < asciiString.length; i++) {
+    asciiUint8Array[i] = asciiString.charCodeAt(i);
+  }
+
+  return new TextDecoder('utf-8').decode(asciiUint8Array);
+}
+
 module.exports = {
   parse,
   removeDriveRoot,
@@ -91,4 +105,5 @@ module.exports = {
   sanitizeFilename,
   selectExternalRoot,
   isFromExternalDrive,
+  asciiToUtf8,
 };
