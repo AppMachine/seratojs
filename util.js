@@ -86,7 +86,6 @@ function isFromExternalDrive(songPath, platformParam = null) {
 /**
  * @param {string} asciiString
  * @return {string}
- * @private
  */
 function asciiToUtf8(asciiString) {
   const asciiUint8Array = new Uint8Array(asciiString.length);
