@@ -134,6 +134,17 @@ class Crate {
     return Array.from(roots);
   }
 
+  getSongFileBufferSync () {
+    const filepath = this._buildCrateFilepath(
+      this.seratoFolder || PLATFORM_DEFAULT_SERATO_FOLDER
+    );
+
+    if (fs.existsSync(filepath) === false) {
+      return [];
+    }
+    return fs.readFileSync(filepath);
+  }
+
   // TODO: When reading, where should it read from?
   async getSongPaths() {
     const filepath = this._buildCrateFilepath(
