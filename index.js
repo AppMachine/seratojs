@@ -11,6 +11,7 @@ const {
   removeDriveRoot,
   selectExternalRoot,
   isFromExternalDrive,
+  asciiToUtf8,
 } = require("./util");
 
 // Singleton for Serato Folder Path (I doubt it'll change during runtime)
@@ -29,7 +30,7 @@ function getSmartcratesFolder(seratoFolder) {
 }
 
 /** Checks if the default platform folder for serato is available. */
-function isDefaultSeratoFolderPresent() { 
+function isDefaultSeratoFolderPresent() {
   return fs.existsSync(PLATFORM_DEFAULT_SERATO_FOLDER);
 }
 
@@ -58,7 +59,7 @@ function listCratesSync(seratoFolders = [PLATFORM_DEFAULT_SERATO_FOLDER]) {
     if(fs.existsSync(smartcratesFolder) === false) {
       return;
     }
-    
+
     const smartcrates = fs.readdirSync(smartcratesFolder).map((x) => {
       const name = path.basename(x, ".crate");
       return new Crate(name, seratoFolder, true);
@@ -188,7 +189,7 @@ class Crate {
     } else {
       filepath = path.join(subcrateFolder, this.filename.replaceAll('--', '%%'));
     }
-    return filepath;
+    return asciiToUtf8(filepath);
   }
   _buildSaveBuffer() {
     const header =
